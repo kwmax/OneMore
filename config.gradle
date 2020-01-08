@@ -1,0 +1,13 @@
+ext {
+    versions = [
+            "compileSdkVersion": 28,
+            "minSdkVersion"    : 16,
+            "targetSdkVersion" : 26,
+            "versionCode"      : 20,
+            "versionName"      : "2.0.0"
+    ]
+    dependencies = [
+            "appcompat-v7"          : 'androidx.appcompat:appcompat:1.0.0',
+
+    ]
+}
