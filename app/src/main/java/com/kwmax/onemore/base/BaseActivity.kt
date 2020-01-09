@@ -1,7 +1,9 @@
 package com.kwmax.onemore.base
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.CoroutineScope
@@ -22,6 +24,7 @@ abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCall
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (needTransparentStatus()) transparentStatusBar()
         setContentView(getLayoutId())
         initView()
         initData()
@@ -29,19 +32,28 @@ abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCall
 
     abstract fun getLayoutId(): Int
     abstract fun initView()
-    open fun initData() {
+    open fun initData() {}
 
+    /** 透明状态栏 */
+    open fun transparentStatusBar() {
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        window.navigationBarColor = Color.TRANSPARENT
+        window.statusBarColor = Color.TRANSPARENT
+        supportActionBar?.hide()
     }
+
+    protected open fun needTransparentStatus(): Boolean = false
 
     protected fun startActivity(z : Class<*>){
         startActivity(Intent(applicationContext,z))
     }
 
-
     protected fun showToast(msg:String){
         Toast.makeText(applicationContext,msg,Toast.LENGTH_SHORT).show()
     }
-
 
     //请求一些必须要的权限
     protected fun requestPermission(permission : Array<String>) {

@@ -22,4 +22,6 @@ class SplashActivity : BaseActivity() {
     }
 
     override fun initData() {}
+
+    override fun needTransparentStatus(): Boolean = true
 }
